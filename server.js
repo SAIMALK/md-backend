@@ -16,7 +16,8 @@ import cors from 'cors';
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'https://md-frontend.netlify.app', // Replace with your frontend URL
+  credentials: true,
+  origin: ['https://md-frontend.netlify.app', 'http://localhost:3000'], // Replace with your frontend URL
 }));
 
 
