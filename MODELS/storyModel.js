@@ -1,23 +1,19 @@
 import mongoose from "mongoose";
-const reviewSchema= new mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'User',
+const reviewSchema = mongoose.Schema(
+    {
+      name: { type: String, required: true },
+      rating: { type: Number, required: true },
+      comment: { type: String, required: true },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+      },
     },
-    title:{
-        type:String,
-        required:true,
-    },rating:{
-        type:String,
-        required:true,
-        default:0,
-    },
-    comment:{
-        type:String,
-        required:true,
-    },
-},{timestamps:true})
+    {
+      timestamps: true,
+    }
+  );
 
 const storySchema = new mongoose.Schema({
     user:{
