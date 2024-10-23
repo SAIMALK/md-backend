@@ -148,10 +148,10 @@ const createStoryReview = asyncHandler(async (req, res) => {
       (r) => r.user.toString() === req.user._id.toString()
     );
 
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error("Story already reviewed");
-    }
+    // if (alreadyReviewed) {
+    //   res.status(400);
+    //   throw new Error("Story already reviewed");
+    // }
 
     const review = {
       name: req.user.name,
