@@ -139,7 +139,7 @@ const deleteStory = asyncHandler(async (req, res) => {
 // @route   POST /api/storys/:id/reviews
 // @access  Private
 const createStoryReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
+  const { comment } = req.body;
 
   const story = await Story.findById(req.params.id);
 
@@ -155,7 +155,6 @@ const createStoryReview = asyncHandler(async (req, res) => {
 
     const review = {
       name: req.user.name,
-      rating: Number(rating),
       comment,
       user: req.user._id,
     };
@@ -163,10 +162,6 @@ const createStoryReview = asyncHandler(async (req, res) => {
     story.reviews.push(review);
 
     story.numReviews = story.reviews.length;
-
-    story.rating =
-      story.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      story.reviews.length;
 
     await story.save();
     res.status(201).json({ message: "Review added" });
