@@ -135,6 +135,34 @@ const deleteStory = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteStoryReview = asyncHandler(async (req, res) => {
+  const { id: storyId, commentId: commentId } = req.params;
+
+  // Find the story by ID
+  const story = await Story.findById(storyId);
+
+  if (!story) {
+    res.status(404);
+    throw new Error("Story not found");
+  }
+
+  // Find the specific review
+  const reviewIndex = story.reviews.findIndex((review) => review._id.toString() === commentId);
+
+  if (reviewIndex === -1) {
+    res.status(404);
+    throw new Error("Review not found");
+  }
+
+  // Remove the specific review
+  story.reviews.splice(reviewIndex, 1);
+
+  // Save the updated story
+  await story.save();
+
+  res.status(200).json({ message: "Comment deleted successfully" });
+});
+
 // @desc    Create new review
 // @route   POST /api/storys/:id/reviews
 // @access  Private
@@ -188,5 +216,6 @@ export {
   updateStory,
   deleteStory,
   createStoryReview,
+  deleteStoryReview,
   getTopStorys,
 };
