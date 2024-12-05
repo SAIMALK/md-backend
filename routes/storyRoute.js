@@ -8,6 +8,7 @@ import {
   updateStory,
   deleteStory,
   createStoryReview,
+  deleteStoryReview,
   getTopStorys,
 } from '../controllers/storyController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
@@ -15,6 +16,8 @@ import checkObjectId from '../middleware/checkObjectId.js';
 router.route('/author/:authorId').get(getStoriesByAuthorId);
 router.route('/').get(getStorys).post(protect, admin, createStory);
 router.route('/:id/reviews').post(protect, checkObjectId, createStoryReview);
+router.route('/:id/reviews/:commentId').delete(protect,admin, checkObjectId, deleteStoryReview);
+
 router.get('/top', getTopStorys);
 router
   .route('/:id')
@@ -23,4 +26,3 @@ router
   .delete(protect, admin, checkObjectId, deleteStory);
 
 export default router;
-
